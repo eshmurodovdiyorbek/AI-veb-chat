@@ -1,4 +1,3 @@
-# AI-veb-chat
 # 🤖 Diyorbek AI — Intelligent AI Assistant
 
 **Diyorbek AI** — Python va LangChain texnologiyalari asosida ishlab chiqilayotgan shaxsiy AI Assistant. Ushbu loyiha foydalanuvchilarga savollarga javob topish, internetdan ma'lumot qidirish va oddiy hisob-kitoblarni bajarishda yordam berish uchun yaratilgan.
@@ -10,11 +9,13 @@ Loyihaning asosiy maqsadi — foydalanuvchi bilan tabiiy tilda muloqot qila olad
 - 💬 **AI Chat:** foydalanuvchi bilan tabiiy tilda suhbatlashish.
 - 🧠 **AI Agent:** foydalanuvchi topshirig‘iga qarab kerakli vositalarni tanlash.
 - 🔎 **Smart Search:** DuckDuckGo orqali internetdan ma'lumot qidirish.
-- 🧮 **Calculator Tool:** ikkita sonni ko‘paytirish.
+- 🧮 **Multiply Tool:** ikkita sonni ko‘paytirish.
 - 💾 **Chat Memory:** suhbat tarixini boshqarish imkoniyati.
 - 🌐 **Web Interface:** Chainlit yordamida yaratilgan chat interfeysi.
 
-**arxitekturasi**
+## 🏗️ Architecture — Loyiha arxitekturasi
+
+Loyiha modulli arxitektura asosida tashkil etilgan. Har bir Python fayli alohida vazifani bajaradi.
 Diyorbek_AI/
 │
 ├── app_chainlit.py       # Asosiy chat dasturi
@@ -23,6 +24,18 @@ Diyorbek_AI/
 ├── tools.py              # AI agent vositalari
 ├── .env                  # Maxfiy sozlamalar
 └── requirements.txt      # Kutubxonalar
+
+### 📂 Fayllarning vazifalari
+
+| Fayl | Vazifasi |
+|---|---|
+| `app_chainlit.py` | Chainlit interfeysi va AI agentni ishga tushirish |
+| `ai_memory.py` | Suhbat tarixini saqlash va qayta olish |
+| `database.py` | PostgreSQL ma'lumotlar bazasiga ulanish |
+| `tools.py` | AI agent foydalanadigan qo‘shimcha vositalar |
+| `.env` | API kalitlari va ma'lumotlar bazasi sozlamalari |
+| `requirements.txt` | Loyihada ishlatiladigan Python kutubxonalari |
+
 ## 🛠️ Texnologiyalar
 
 | Texnologiya | Vazifasi |
@@ -35,7 +48,7 @@ Diyorbek_AI/
 | GPT-OSS-120B | Foydalanilayotgan AI model |
 | DuckDuckGo Search | Internetdan ma'lumot qidirish |
 | Python-dotenv | Maxfiy sozlamalarni `.env` orqali yuklash |
-| PostgreSQL | Suhbat ma'lumotlarini saqlash uchun ma'lumotlar bazasi |
+| PostgreSQL | Suhbat ma'lumotlarini saqlash |
 | LangChain Postgres | PostgreSQL bilan chat history integratsiyasi |
 
 ## ⚙️ AI Agent qanday ishlaydi?
@@ -59,14 +72,21 @@ Internetdan kerakli ma'lumotlarni qidirish uchun ishlatiladi.
 
 Ikkita sonni ko‘paytirish uchun ishlatiladi.
 
-## 🧠 Xotira tizimi
+## 🧠 AI Memory — Xotira tizimi
 
 Loyihada LangChain `RunnableWithMessageHistory` orqali suhbat tarixini kontekst sifatida ishlatish mexanizmi mavjud.
 
-PostgreSQL asosidagi doimiy xotira tizimi ham ishlab chiqilmoqda. Uning maqsadi:
+PostgreSQL asosidagi doimiy xotira tizimi ham ishlab chiqilmoqda.
+
+Uning asosiy maqsadlari:
+
 - Suhbatlarni ma'lumotlar bazasida saqlash.
 - Oldingi suhbatlarni qayta ochish.
 - Har bir suhbatni alohida boshqarish.
+- AI uchun suhbat kontekstini taqdim etish.
+
+**Eslatma:** PostgreSQL xotirasining to‘liq integratsiyasi loyiha rivojlanish bosqichida.
+
 ## 📦 O‘rnatish
 
 ### 1. Repository'ni yuklab olish
@@ -78,7 +98,7 @@ git clone <YOUR_REPOSITORY_URL>
 ### 2. Loyiha papkasiga kirish
 
 ```bash
-cd "AI veb-chat"
+cd Diyorbek_AI
 ```
 
 ### 3. Virtual muhit yaratish
@@ -93,22 +113,15 @@ python -m venv .venv
 .venv\Scripts\activate
 ```
 
-### 5. Kerakli kutubxonalarni o‘rnatish
+### 5. Kutubxonalarni o‘rnatish
 
 ```bash
-pip install chainlit python-dotenv
-pip install langchain-classic langchain-community langchain-core langchain-groq ddgs
-```
-
-PostgreSQL xotirasi uchun qo‘shimcha:
-
-```bash
-pip install langchain-postgres "psycopg[binary]"
+pip install -r requirements.txt
 ```
 
 ## 🔐 Environment Variables
 
-Loyiha asosiy papkasida `.env` faylini yarating:
+Loyiha papkasida `.env` faylini yarating:
 
 ```env
 GROQ_API_KEY=your_groq_api_key
@@ -124,7 +137,7 @@ Haqiqiy API kalitlari va parollarni GitHub'ga yuklamang.
 
 ## 🚀 Ishga tushirish
 
-`app_chainlit.py` joylashgan papkada terminalni oching va:
+`app_chainlit.py` joylashgan papkada terminalni oching:
 
 ```bash
 chainlit run app_chainlit.py
@@ -137,8 +150,6 @@ http://localhost:8000
 ```
 
 ## 👥 Kimlar uchun foydali?
-
-Diyorbek AI quyidagi foydalanuvchilarga yordam berishi mumkin:
 
 - **Talabalar:** savollarga javob topish va ma'lumot izlash.
 - **Dasturchilar:** dasturlash bo‘yicha savollarni muhokama qilish.
