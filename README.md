@@ -13,18 +13,6 @@ Loyihaning asosiy maqsadi — foydalanuvchi bilan tabiiy tilda muloqot qila olad
 - 💾 **Chat Memory:** suhbat tarixini boshqarish imkoniyati.
 - 🌐 **Web Interface:** Chainlit yordamida yaratilgan chat interfeysi.
 
-## 🏗️ Architecture — Loyiha arxitekturasi
-
-Loyiha modulli arxitektura asosida tashkil etilgan. Har bir Python fayli alohida vazifani bajaradi.
-Diyorbek_AI/
-│
-├── app_chainlit.py       # Asosiy chat dasturi
-├── ai_memory.py          # AI xotirasini boshqarish
-├── database.py           # PostgreSQL bilan ulanish
-├── tools.py              # AI agent vositalari
-├── .env                  # Maxfiy sozlamalar
-└── requirements.txt      # Kutubxonalar
-
 ### 📂 Fayllarning vazifalari
 
 | Fayl | Vazifasi |
