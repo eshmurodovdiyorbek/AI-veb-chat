@@ -3,6 +3,10 @@ import uuid
 from database import get_connection
 from langchain_postgres import PostgresChatMessageHistory
 from langchain_core.messages import HumanMessage, AIMessage
+from dotenv import load_dotenv
+from langchain_groq import ChatGroq
+
+load_dotenv()
 
 # PostgreSQL jadvallari nomi
 CONVERSATIONS_TABLE = "conversations"
@@ -89,6 +93,8 @@ def get_chat_history(user_id, conversation_id):
             (conversation_id, user_id)
         )
 
+        row
+
         if result.fetchone() is None:
             raise ValueError("Suhbat topilmadi!")
 
@@ -106,6 +112,10 @@ if __name__ == "__main__":
 
     USER_ID = "Diyorbek"
 
+    llm = ChatGroq(
+        model_name="openai/gpt-oss-120b",
+        temperature=0
+    )
     # 1. Yangi suhbat yaratamiz
     conversation_id = create_conversation(
         USER_ID,
@@ -113,33 +123,33 @@ if __name__ == "__main__":
     )
 
     print("Yangi suhbat ID:", conversation_id)
+    while True:
+        user_input = input("\nSiz: ")
 
-    # 2. Foydalanuvchi xabarini saqlaymiz
+        if user_input.lower() == "stop":
+            print("Suhbat yakunlandi.")
+            break
+    messages = get_chat_history(
+        USER_ID,
+        conversation_id
+    )
+
+    human_message = HumanMessage(content=user_input)
+    messages.append(human_message)
+
+    response = llm.invoke(messages)
+
+    ai_response = response.content
+
+    print("Diyorbek AI:",ai_response)
     save_message(
         USER_ID,
         conversation_id,
-        HumanMessage(content="Salom, mening ismim Diyor.")
+        human_message
     )
 
-    # 3. AI javobini saqlaymiz
     save_message(
         USER_ID,
         conversation_id,
-        AIMessage(content="Salom, Diyor! Siz bilan tanishganimdan xursandman.")
+        AIMessage(content=ai_response)
     )
-
-    # 4. Suhbat tarixini o'qiymiz
-    messages = get_chat_history(USER_ID, conversation_id)
-
-    print("\nSuhbat tarixi:")
-
-    for message in messages:
-        print(message.type, ":", message.content)
-
-    # 5. Foydalanuvchining barcha suhbatlarini chiqaramiz
-    conversations = get_user_conversations(USER_ID)
-
-    print("\nBarcha suhbatlar:")
-
-    for conversation in conversations:
-        print(conversation)

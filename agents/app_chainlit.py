@@ -1,12 +1,12 @@
-from typing import Dict
 import chainlit as cl
 from dotenv import load_dotenv
 from langchain_classic.agents import AgentExecutor , create_tool_calling_agent
 from langchain_community.tools import DuckDuckGoSearchRun
-from langchain_core.chat_history import InMemoryChatMessageHistory
 from langchain_core.prompts import ChatPromptTemplate ,MessagesPlaceholder
-from langchain_core.runnables import RunnableWithMessageHistory
 from langchain_core.tools import tool
+from langchain_core.messages import HumanMessage,AIMessage
+from AI_memory import create_conversation , get_chat_history,save_message
+
 from langchain_groq import ChatGroq
 
 from AI_memory import create_conversation
@@ -14,14 +14,6 @@ from AI_memory import create_conversation
 
 load_dotenv()
 # nest_asyncio.apply()
-
-_store: Dict[str , InMemoryChatMessageHistory] = {}
-
-def get_session_history(session_id: str) -> InMemoryChatMessageHistory:
-    if session_id not in _store:
-        _store[session_id]= InMemoryChatMessageHistory()
-    return _store[session_id]
-
 @cl.author_rename
 def rename(orig_author: str):
     rename_dict = {"Chatbot": "Diyorbek AI","Assistant":"Diyorbek AI"}
@@ -65,25 +57,48 @@ async def start():
     agent_runnable = create_tool_calling_agent(
         llm=llm, tools=tools,prompt=prompt,
     )
-    agent = AgentExecutor(agent=agent_runnable,tools=tools,verbose=True)
-    agent_with_memory = RunnableWithMessageHistory(
-        agent,
-        get_session_history,
-        input_messages_key= 'input',
-        history_messages_key= "chat_history",
-        output_messages_key= 'output'
+    agent = AgentExecutor(agent=agent_runnable,
+                          tools=tools,
+                          verbose=True)
+
+    cl.user_session.set("agent",agent)
+def run_agent_turn(agent ,user_id , conversation_id , user_input):
+    chat_history = get_chat_history(
+        user_id,
+        conversation_id
     )
-    cl.user_session.set("agent",agent_with_memory)
+
+    response = agent.invoke({
+        "input":user_input,
+        "chat_history":chat_history,
+    })
+    ai_response = response['output']
+
+    save_message(
+        user_id,
+        conversation_id,
+        HumanMessage(content=user_input)
+    )
+
+    save_message(
+        user_id,
+        conversation_id,
+        AIMessage(content=ai_response)
+    )
+
+    return ai_response
 
 @cl.on_message
 async def main(message: cl.Message):
     agent  = cl.user_session.get("agent")
-    session_id = cl.user_session.get("id")
+    user_id = cl.user_session.get("id")
+    conversation_id = cl.user_session.get("conversation_id")
 
-    cfg = {"configurable": {"session_id": session_id}}
-    res = await cl.make_async(agent.invoke)({'input':message.content},config=cfg)
 
-    response_text = (
-        res.get("output",str(res)) if isinstance(res,dict) else str(res)
+    response_text = await cl.make_async(run_agent_turn)(
+        agent,
+        user_id,
+        conversation_id,
+        message.content
     )
     await cl.Message(content=response_text).send()
