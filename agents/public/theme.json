@@ -1,15 +1,31 @@
 
 {
-  "light": {
-    "background": "#F7F7FC",
-    "paper": "#FFFFFF",
-    "primary": "#7565F5",
-    "text": "#171725"
-  },
-  "dark": {
-    "background": "#0B0D14",
-    "paper": "#151925",
-    "primary": "#7565F5",
-    "text": "#F5F5F7"
+  "variables": {
+    "light": {
+      "background": "#F5FAF7",
+      "paper": "#FFFFFF",
+      "primary": {
+        "main": "#059669",
+        "dark": "#047857",
+        "light": "#34D399"
+      },
+      "text": {
+        "primary": "#14251D",
+        "secondary": "#64756B"
+      }
+    },
+    "dark": {
+      "background": "#0B0F0E",
+      "paper": "#151E1A",
+      "primary": {
+        "main": "#10B981",
+        "dark": "#059669",
+        "light": "#34D399"
+      },
+      "text": {
+        "primary": "#F0FDF4",
+        "secondary": "#9CAFA4"
+      }
+    }
   }
 }
