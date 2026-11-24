@@ -1,0 +1,15 @@
+
+{
+  "light": {
+    "background": "#F7F7FC",
+    "paper": "#FFFFFF",
+    "primary": "#7565F5",
+    "text": "#171725"
+  },
+  "dark": {
+    "background": "#0B0D14",
+    "paper": "#151925",
+    "primary": "#7565F5",
+    "text": "#F5F5F7"
+  }
+}
