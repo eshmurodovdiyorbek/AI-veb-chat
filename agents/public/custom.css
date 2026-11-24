@@ -1,0 +1,224 @@
+
+/* ==========================================
+   DIYORBEK AI — WORKSPACE PRO
+   Theme: Emerald Green
+   ========================================== */
+
+:root {
+    --accent-color: #10B981;
+    --accent-hover: #34D399;
+    --accent-dark: #059669;
+
+    --bg-dark: #0B0F0E;
+    --sidebar-bg: #101715;
+    --card-bg: #151E1A;
+    --composer-bg: #18231E;
+
+    --text-primary: #F0FDF4;
+    --text-secondary: #9CAFA4;
+
+    --border-color: rgba(255, 255, 255, 0.08);
+    --green-glow: rgba(16, 185, 129, 0.16);
+}
+
+/* ==========================================
+   GLOBAL
+   ========================================== */
+
+body.dark {
+    background: var(--bg-dark) !important;
+    color: var(--text-primary);
+}
+
+/* Asosiy matn */
+
+body.dark p,
+body.dark span {
+    color: inherit;
+}
+
+/* ==========================================
+   SIDEBAR
+   ========================================== */
+
+#sidebar {
+    background: var(--sidebar-bg) !important;
+    border-right: 1px solid var(--border-color);
+}
+
+/* Sidebar ichidagi elementlar */
+
+#sidebar button {
+    border-radius: 10px !important;
+    transition: all 0.2s ease !important;
+}
+
+#sidebar button:hover {
+    background: rgba(16, 185, 129, 0.10) !important;
+    border-color: rgba(16, 185, 129, 0.25) !important;
+}
+
+/* ==========================================
+   MAIN CHAT
+   ========================================== */
+
+#chat {
+    background:
+        radial-gradient(
+            circle at top,
+            #14251D 0%,
+            #0B0F0E 60%
+        ) !important;
+}
+
+/* ==========================================
+   MESSAGE COMPOSER
+   ========================================== */
+
+#message-composer {
+    background: var(--composer-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 20px !important;
+    backdrop-filter: blur(15px);
+    transition: all 0.25s ease;
+}
+
+#message-composer:focus-within {
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 0 22px var(--green-glow);
+}
+
+/* Composer input */
+
+#message-composer textarea {
+    color: var(--text-primary) !important;
+    background: transparent !important;
+}
+
+/* ==========================================
+   USER MESSAGES
+   ========================================== */
+
+[data-step-type="user_message"] .prose {
+    background: linear-gradient(
+        135deg,
+        #047857,
+        #10B981
+    ) !important;
+
+    color: #FFFFFF !important;
+    border-radius: 18px 18px 4px 18px !important;
+    padding: 12px 18px !important;
+}
+
+/* ==========================================
+   ASSISTANT MESSAGES
+   ========================================== */
+
+[data-step-type="assistant_message"] .prose {
+    color: var(--text-primary);
+    line-height: 1.75;
+}
+
+/* ==========================================
+   CODE BLOCKS
+   ========================================== */
+
+pre {
+    background: #101A15 !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 14px !important;
+    padding: 16px !important;
+}
+
+code {
+    color: #6EE7B7;
+}
+
+/* ==========================================
+   BUTTONS
+   ========================================== */
+
+button {
+    transition: all 0.2s ease !important;
+}
+
+button:hover {
+    border-color: var(--accent-color) !important;
+}
+
+/* ==========================================
+   LINKS
+   ========================================== */
+
+a {
+    color: var(--accent-hover);
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: #6EE7B7;
+}
+
+/* ==========================================
+   INPUTS
+   ========================================== */
+
+input,
+textarea {
+    accent-color: var(--accent-color);
+}
+
+input:focus,
+textarea:focus {
+    outline-color: var(--accent-color) !important;
+}
+
+/* ==========================================
+   SCROLLBAR
+   ========================================== */
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #315344;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-color);
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* ==========================================
+   TEXT SELECTION
+   ========================================== */
+
+::selection {
+    background: #047857;
+    color: #FFFFFF;
+}
+
+/* ==========================================
+   FOCUS
+   ========================================== */
+
+:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+/* ==========================================
+   SMOOTH TRANSITIONS
+   ========================================== */
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #315344 transparent;
+}
