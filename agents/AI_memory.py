@@ -26,7 +26,8 @@ def create_conversation(user_id, title="Yangi suhbat"):
             """,
             (conversation_id, user_id, title)
         )
-
+    print("CREATED USER:", user_id)
+    print("CREATED ID:", conversation_id)
     return conversation_id
 
 

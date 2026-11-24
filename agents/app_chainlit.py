@@ -27,7 +27,7 @@ async def start():
         user_id,
         "Yangi suhbat"
     )
-    cl.user_session.set('user_id',user_id)
+    cl.user_session.set('db_user_id',user_id)
     cl.user_session.set('conversation_id',conversation_id)
 
     print("Yangi suhbat yaratildi:",conversation_id)
@@ -63,6 +63,8 @@ async def start():
 
     cl.user_session.set("agent",agent)
 def run_agent_turn(agent ,user_id , conversation_id , user_input):
+    print("USER ID:", user_id)
+    print("CONVERSATION ID:", conversation_id)
     chat_history = get_chat_history(
         user_id,
         conversation_id
@@ -91,7 +93,7 @@ def run_agent_turn(agent ,user_id , conversation_id , user_input):
 @cl.on_message
 async def main(message: cl.Message):
     agent  = cl.user_session.get("agent")
-    user_id = cl.user_session.get("id")
+    user_id = cl.user_session.get("db_user_id")
     conversation_id = cl.user_session.get("conversation_id")
 
 
