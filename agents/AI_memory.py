@@ -93,9 +93,10 @@ def get_chat_history(user_id, conversation_id):
             (conversation_id, user_id)
         )
 
-        row
+        row =result.fetchone()
 
-        if result.fetchone() is None:
+        print("Database result: ",row)
+        if row is None:
             raise ValueError("Suhbat topilmadi!")
 
         history = PostgresChatMessageHistory(
